@@ -2,7 +2,7 @@ import os
 import sys
 
 if __name__ == "__main__":
-    sys.path.append('../')
+    sys.path.append("../")
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
     try:
         from django.core.management import execute_from_command_line
@@ -20,4 +20,3 @@ if __name__ == "__main__":
             )
         raise
     execute_from_command_line(sys.argv)
-

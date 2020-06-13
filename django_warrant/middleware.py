@@ -1,4 +1,3 @@
-
 class APIKeyMiddleware(object):
     """
         A simple middleware to pull the users API key from the headers and
@@ -18,7 +17,7 @@ class APIKeyMiddleware(object):
 
     @staticmethod
     def process_request(request):
-        if 'HTTP_AUTHORIZATION_ID' in request.META:
-            request.api_key = request.META['HTTP_AUTHORIZATION_ID']
+        if "HTTP_AUTHORIZATION_ID" in request.META:
+            request.api_key = request.META["HTTP_AUTHORIZATION_ID"]
 
         return None

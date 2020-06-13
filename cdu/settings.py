@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@3-8jpe#2yh601ektz8e9=vzo8496n=3w5o#du+%i2^qg%po%g'
+SECRET_KEY = "@3-8jpe#2yh601ektz8e9=vzo8496n=3w5o#du+%i2^qg%po%g"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -28,86 +28,87 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 AUTHENTICATION_BACKENDS = [
-    'django_warrant.backend.CognitoBackend',
-    'django.contrib.auth.backends.ModelBackend'
+    "django_warrant.backend.CognitoBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
-COGNITO_TEST_USERNAME = os.environ.get('COGNITO_TEST_USERNAME', 'TEST_USERNAME')
+COGNITO_TEST_USERNAME = os.environ.get("COGNITO_TEST_USERNAME", "TEST_USERNAME")
 
-COGNITO_TEST_PASSWORD = os.environ.get('COGNITO_TEST_PASSWORD', 'TEST_PASSWORD')
+COGNITO_TEST_PASSWORD = os.environ.get("COGNITO_TEST_PASSWORD", "TEST_PASSWORD")
 
-COGNITO_USER_POOL_ID = os.environ.get('COGNITO_USER_POOL_ID', 'USER_POOL_ID')
+COGNITO_USER_POOL_ID = os.environ.get("COGNITO_USER_POOL_ID", "USER_POOL_ID")
 
-COGNITO_APP_ID = os.environ.get('COGNITO_APP_ID', 'APP_ID')
+COGNITO_APP_ID = os.environ.get("COGNITO_APP_ID", "APP_ID")
 
 COGNITO_ATTR_MAPPING = os.environ.get(
-    'COGNITO_ATTR_MAPPING',
+    "COGNITO_ATTR_MAPPING",
     {
-        'email': 'email',
-        'given_name': 'first_name',
-        'family_name': 'last_name',
-        'custom:api_key': 'api_key',
-        'custom:api_key_id': 'api_key_id'
-    })
+        "email": "email",
+        "given_name": "first_name",
+        "family_name": "last_name",
+        "custom:api_key": "api_key",
+        "custom:api_key_id": "api_key_id",
+    },
+)
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', "TEST_KEY")
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", "TEST_KEY")
 
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', "TEST_KEY")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", "TEST_KEY")
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django_warrant',
-    'crispy_forms',
-    'django_extensions'
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django_warrant",
+    "crispy_forms",
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'cdu.urls'
+ROOT_URLCONF = "cdu.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+SESSION_SERIALIZER = "django.contrib.sessions.serializers.JSONSerializer"
 
-WSGI_APPLICATION = 'cdu.wsgi.application'
+WSGI_APPLICATION = "cdu.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
@@ -117,27 +118,21 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
 ]
 
-LOGIN_REDIRECT_URL = '/accounts/profile'
+LOGIN_REDIRECT_URL = "/accounts/profile"
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -149,6 +144,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
+CRISPY_TEMPLATE_PACK = "bootstrap3"

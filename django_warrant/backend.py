@@ -14,25 +14,23 @@ from .utils import cognito_to_dict
 class CognitoUser(Cognito):
     user_class = get_user_model()
     # Mapping of Cognito User attribute name to Django User attribute name
-    COGNITO_ATTR_MAPPING = getattr(settings, 'COGNITO_ATTR_MAPPING',
-                                   {
-                                       'email': 'email',
-                                       'given_name': 'first_name',
-                                       'family_name': 'last_name',
-                                   }
-                                   )
+    COGNITO_ATTR_MAPPING = getattr(
+        settings,
+        "COGNITO_ATTR_MAPPING",
+        {"email": "email", "given_name": "first_name", "family_name": "last_name", },
+    )
 
-    def get_user_obj(self,username=None,attribute_list=[],metadata={},attr_map={}):
-        user_attrs = cognito_to_dict(attribute_list,CognitoUser.COGNITO_ATTR_MAPPING)
+    def get_user_obj(self, username=None, attribute_list=[], metadata={}, attr_map={}):
+        user_attrs = cognito_to_dict(attribute_list, CognitoUser.COGNITO_ATTR_MAPPING)
         django_fields = [f.name for f in CognitoUser.user_class._meta.get_fields()]
         extra_attrs = {}
         for k in set(user_attrs.keys()):
             if k not in django_fields:
                 extra_attrs.update({k: user_attrs.pop(k, None)})
-        if getattr(settings, 'COGNITO_CREATE_UNKNOWN_USERS', True):
+        if getattr(settings, "COGNITO_CREATE_UNKNOWN_USERS", True):
             user, created = CognitoUser.user_class.objects.update_or_create(
-                username=username,
-                defaults=user_attrs)
+                username=username, defaults=user_attrs
+            )
         else:
             try:
                 user = CognitoUser.user_class.objects.get(username=username)
@@ -50,9 +48,9 @@ class CognitoUser(Cognito):
 class AbstractCognitoBackend(ModelBackend):
     __metaclass__ = abc.ABCMeta
 
-    UNAUTHORIZED_ERROR_CODE = 'NotAuthorizedException'
+    UNAUTHORIZED_ERROR_CODE = "NotAuthorizedException"
 
-    USER_NOT_FOUND_ERROR_CODE = 'UserNotFoundException'
+    USER_NOT_FOUND_ERROR_CODE = "UserNotFoundException"
 
     COGNITO_USER_CLASS = CognitoUser
 
@@ -67,9 +65,10 @@ class AbstractCognitoBackend(ModelBackend):
         cognito_user = CognitoUser(
             settings.COGNITO_USER_POOL_ID,
             settings.COGNITO_APP_ID,
-            access_key=getattr(settings, 'AWS_ACCESS_KEY_ID', None),
-            secret_key=getattr(settings, 'AWS_SECRET_ACCESS_KEY', None),
-            username=username)
+            access_key=getattr(settings, "AWS_ACCESS_KEY_ID", None),
+            secret_key=getattr(settings, "AWS_SECRET_ACCESS_KEY", None),
+            username=username,
+        )
         try:
             cognito_user.authenticate(password)
         except (Boto3Error, ClientError) as e:
@@ -83,11 +82,11 @@ class AbstractCognitoBackend(ModelBackend):
         return user
 
     def handle_error_response(self, error):
-        error_code = error.response['Error']['Code']
+        error_code = error.response["Error"]["Code"]
         if error_code in [
-                AbstractCognitoBackend.UNAUTHORIZED_ERROR_CODE,
-                AbstractCognitoBackend.USER_NOT_FOUND_ERROR_CODE
-            ]:
+            AbstractCognitoBackend.UNAUTHORIZED_ERROR_CODE,
+            AbstractCognitoBackend.USER_NOT_FOUND_ERROR_CODE,
+        ]:
             return None
         raise error
 
@@ -99,10 +98,11 @@ class CognitoBackend(AbstractCognitoBackend):
         refresh token in the session.
         """
         user = super(CognitoBackend, self).authenticate(
-            username=username, password=password)
+            username=username, password=password
+        )
         if user:
-            request.session['ACCESS_TOKEN'] = user.access_token
-            request.session['ID_TOKEN'] = user.id_token
-            request.session['REFRESH_TOKEN'] = user.refresh_token
+            request.session["ACCESS_TOKEN"] = user.access_token
+            request.session["ID_TOKEN"] = user.id_token
+            request.session["REFRESH_TOKEN"] = user.refresh_token
             request.session.save()
         return user
