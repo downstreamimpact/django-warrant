@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-from envs import env
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,15 +32,15 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend'
 ]
 
-COGNITO_TEST_USERNAME = env('COGNITO_TEST_USERNAME')
+COGNITO_TEST_USERNAME = os.environ.get('COGNITO_TEST_USERNAME', 'TEST_USERNAME')
 
-COGNITO_TEST_PASSWORD = env('COGNITO_TEST_PASSWORD')
+COGNITO_TEST_PASSWORD = os.environ.get('COGNITO_TEST_PASSWORD', 'TEST_PASSWORD')
 
-COGNITO_USER_POOL_ID = env('COGNITO_USER_POOL_ID')
+COGNITO_USER_POOL_ID = os.environ.get('COGNITO_USER_POOL_ID', 'USER_POOL_ID')
 
-COGNITO_APP_ID = env('COGNITO_APP_ID')
+COGNITO_APP_ID = os.environ.get('COGNITO_APP_ID', 'APP_ID')
 
-COGNITO_ATTR_MAPPING = env(
+COGNITO_ATTR_MAPPING = os.environ.get(
     'COGNITO_ATTR_MAPPING',
     {
         'email': 'email',
@@ -49,12 +48,11 @@ COGNITO_ATTR_MAPPING = env(
         'family_name': 'last_name',
         'custom:api_key': 'api_key',
         'custom:api_key_id': 'api_key_id'
-    },
-    var_type='dict')
+    })
 
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', "TEST_KEY")
 
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', "TEST_KEY")
 
 # Application definition
 

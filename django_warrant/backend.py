@@ -4,11 +4,10 @@ import abc
 from boto3.exceptions import Boto3Error
 from botocore.exceptions import ClientError
 from django.conf import settings
-from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import get_user_model
-from django.utils.six import iteritems
+from django.contrib.auth.backends import ModelBackend
+from pycognito import Cognito
 
-from warrant import Cognito
 from .utils import cognito_to_dict
 
 
@@ -27,7 +26,7 @@ class CognitoUser(Cognito):
         user_attrs = cognito_to_dict(attribute_list,CognitoUser.COGNITO_ATTR_MAPPING)
         django_fields = [f.name for f in CognitoUser.user_class._meta.get_fields()]
         extra_attrs = {}
-        for k, v in user_attrs.items():
+        for k in set(user_attrs.keys()):
             if k not in django_fields:
                 extra_attrs.update({k: user_attrs.pop(k, None)})
         if getattr(settings, 'COGNITO_CREATE_UNKNOWN_USERS', True):
@@ -37,11 +36,11 @@ class CognitoUser(Cognito):
         else:
             try:
                 user = CognitoUser.user_class.objects.get(username=username)
-                for k, v in iteritems(user_attrs):
+                for k, v in user_attrs.items():
                     setattr(user, k, v)
                 user.save()
             except CognitoUser.user_class.DoesNotExist:
-                    user = None
+                user = None
         if user:
             for k, v in extra_attrs.items():
                 setattr(user, k, v)

@@ -1,23 +1,22 @@
 from __future__ import unicode_literals
 
-from mock import patch, MagicMock
-from botocore.exceptions import ClientError
 from importlib import import_module
 from unittest import skipIf
+from unittest.mock import patch
 
+from botocore.exceptions import ClientError
 from django import VERSION as DJANGO_VERSION
-from django.contrib.auth.models import AnonymousUser, User
 from django.conf import settings
 from django.contrib.auth import get_user_model, signals, authenticate as django_authenticate
+from django.contrib.auth.models import AnonymousUser
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.http import HttpRequest
 from django.test import override_settings, TestCase, TransactionTestCase
 from django.test.client import RequestFactory
-from django.utils.six import iteritems
+from pycognito import Cognito
 
-from django_warrant.backend import CognitoBackend, CognitoUser
 from django_warrant.middleware import APIKeyMiddleware
-from warrant import Cognito
+
 
 def set_tokens(cls, *args, **kwargs):
     cls.access_token = 'accesstoken'
